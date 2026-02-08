@@ -1,8 +1,8 @@
 const APIFY_TOKEN = process.env.APIFY_TOKEN || "";
-const LINKEDIN_COOKIE = process.env.LINKEDIN_COOKIE || "";
 
-const PROFILE_ACTOR = "logical_scrapers/linkedin-profile-scraper";
-const POSTS_ACTOR = "curious_coder/linkedin-post-search-scraper";
+// Both no-cookie actors from HarvestAPI
+const PROFILE_ACTOR = "harvestapi/linkedin-profile-scraper";
+const POSTS_ACTOR = "harvestapi/linkedin-profile-posts";
 
 interface ApifyRunResult {
   id: string;
@@ -47,11 +47,10 @@ export async function getDatasetItems(datasetId: string): Promise<unknown[]> {
 }
 
 export async function scrapeLinkedInProfile(profileUrl: string) {
-  if (!APIFY_TOKEN || !LINKEDIN_COOKIE) return null;
+  if (!APIFY_TOKEN) return null;
 
   const run = await runApifyActor(PROFILE_ACTOR, {
-    profileUrls: [profileUrl],
-    cookie: [{ name: "li_at", value: LINKEDIN_COOKIE, domain: ".linkedin.com" }],
+    urls: [profileUrl],
   });
   await waitForRun(run.id);
   const items = await getDatasetItems(run.defaultDatasetId);
@@ -59,17 +58,11 @@ export async function scrapeLinkedInProfile(profileUrl: string) {
 }
 
 export async function scrapeLinkedInPosts(profileUrl: string, maxPosts = 50) {
-  if (!APIFY_TOKEN || !LINKEDIN_COOKIE) return null;
-
-  // Extract the public profile ID from the URL
-  const match = profileUrl.match(/linkedin\.com\/in\/([^/?]+)/);
-  const profileId = match ? match[1] : profileUrl;
+  if (!APIFY_TOKEN) return null;
 
   const run = await runApifyActor(POSTS_ACTOR, {
-    searchUrls: [`https://www.linkedin.com/in/${profileId}/recent-activity/all/`],
-    cookie: [{ name: "li_at", value: LINKEDIN_COOKIE, domain: ".linkedin.com" }],
-    maxResults: maxPosts,
-    deepScrape: true,
+    profileUrls: [profileUrl],
+    maxPosts,
   });
   await waitForRun(run.id);
   return getDatasetItems(run.defaultDatasetId);
