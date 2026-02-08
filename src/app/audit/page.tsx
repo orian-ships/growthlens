@@ -165,10 +165,20 @@ export default function AuditPage() {
 
   const { profile, contentStrategy, engagement } = audit;
   const { recommendations, summary } = generateRecommendations(audit);
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const handlePDF = async () => {
+    setPdfLoading(true);
+    try {
+      const { exportAuditPDF } = await import("@/lib/pdf-export");
+      await exportAuditPDF("audit-content", profile.name);
+    } catch (e) { console.error("PDF export failed", e); }
+    setPdfLoading(false);
+  };
 
   return (
     <div className="min-h-screen py-12 px-6">
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div id="audit-content" className="max-w-6xl mx-auto space-y-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
@@ -184,7 +194,12 @@ export default function AuditPage() {
               <span className="text-slate-400"><span className="text-white font-semibold">{profile.connections.toLocaleString()}</span> connections</span>
             </div>
           </div>
-          <ScoreRing score={audit.overallScore} grade={audit.overallGrade} />
+          <div className="flex items-center gap-4">
+            <button onClick={handlePDF} disabled={pdfLoading} className="px-4 py-2 rounded-xl border border-white/[0.08] text-slate-300 hover:text-white hover:border-white/20 transition-colors text-sm disabled:opacity-50">
+              {pdfLoading ? "Generating PDF..." : "📄 Download PDF"}
+            </button>
+            <ScoreRing score={audit.overallScore} grade={audit.overallGrade} />
+          </div>
         </div>
 
         {/* Overall Breakdown */}

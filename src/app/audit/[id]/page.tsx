@@ -1,10 +1,67 @@
 "use client";
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, useCallback } from "react";
 import { getAudit } from "@/lib/convex";
 import type { ProfileAudit } from "@/lib/mock-data";
 import { DonutChart, BarChart, HeatmapGrid, ScoreRing, ProgressBar, RadarChart } from "@/components/charts";
 import { Card, CardHeader, StatCard, MetricRow, Badge } from "@/components/ui";
 import { generateRecommendations } from "@/lib/recommendations";
+
+function ShareSection({ audit, auditId }: { audit: ProfileAudit; auditId: string }) {
+  const [copied, setCopied] = useState(false);
+  const auditUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/audit/${auditId}`
+    : `https://growthlens-blue.vercel.app/audit/${auditId}`;
+
+  const tweetText = `My LinkedIn profile scored ${audit.overallScore}/100 on GrowthLens. Check yours →`;
+  const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(auditUrl)}`;
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(auditUrl)}`;
+
+  const copyLink = useCallback(() => {
+    navigator.clipboard.writeText(auditUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [auditUrl]);
+
+  return (
+    <Card>
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-1">
+        <div>
+          <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'Satoshi, sans-serif' }}>Share Your Score</h3>
+          <p className="text-slate-400 text-sm mt-0.5">Show off your LinkedIn game 🚀</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href={linkedInUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+            style={{ background: "rgba(0,119,181,0.15)", color: "#0077B5", border: "1px solid rgba(0,119,181,0.2)" }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a
+            href={twitterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+            style={{ background: "rgba(255,255,255,0.05)", color: "#e2e8f0", border: "1px solid rgba(255,255,255,0.1)" }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Twitter/X
+          </a>
+          <button
+            onClick={copyLink}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105"
+            style={{ background: "rgba(255,255,255,0.05)", color: copied ? "#10b981" : "#e2e8f0", border: `1px solid ${copied ? "rgba(16,185,129,0.3)" : "rgba(255,255,255,0.1)"}` }}
+          >
+            {copied ? "✓ Copied!" : "🔗 Copy Link"}
+          </button>
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 export default function SavedAuditPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -45,10 +102,20 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
 
   const { profile, contentStrategy, engagement } = audit;
   const { recommendations, summary } = generateRecommendations(audit);
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const handlePDF = useCallback(async () => {
+    setPdfLoading(true);
+    try {
+      const { exportAuditPDF } = await import("@/lib/pdf-export");
+      await exportAuditPDF("audit-content", profile.name);
+    } catch (e) { console.error("PDF export failed", e); }
+    setPdfLoading(false);
+  }, [profile.name]);
 
   return (
     <div className="min-h-screen py-12 px-6">
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div id="audit-content" className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-4 mb-3">
@@ -63,8 +130,16 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
               <span className="text-slate-400"><span className="text-white font-semibold">{profile.connections.toLocaleString()}</span> connections</span>
             </div>
           </div>
-          <ScoreRing score={audit.overallScore} grade={audit.overallGrade} />
+          <div className="flex items-center gap-4">
+            <button onClick={handlePDF} disabled={pdfLoading} className="px-4 py-2 rounded-xl border border-white/[0.08] text-slate-300 hover:text-white hover:border-white/20 transition-colors text-sm disabled:opacity-50">
+              {pdfLoading ? "Generating PDF..." : "📄 Download PDF"}
+            </button>
+            <ScoreRing score={audit.overallScore} grade={audit.overallGrade} />
+          </div>
         </div>
+
+        {/* Share Your Score */}
+        <ShareSection audit={audit} auditId={id} />
 
         <Card>
           <CardHeader title="Overall Breakdown" />
