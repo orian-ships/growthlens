@@ -14,6 +14,10 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  if (!mounted) {
+    return <div className="min-h-screen" />;
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -52,7 +56,7 @@ export default function Home() {
             <span className="text-accent font-mono text-sm font-semibold tracking-wider uppercase">See a Real Audit</span>
             <h2 className="text-3xl md:text-5xl font-bold text-white mt-4" style={{ fontFamily: 'Satoshi, sans-serif' }}>What you&apos;ll get</h2>
           </div>
-          {mounted && <Card className="relative overflow-hidden">
+          <Card className="relative overflow-hidden">
             <span className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-widest text-accent/60 bg-accent/10 px-3 py-1 rounded-full border border-accent/10">Sample Audit</span>
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* Left: Score + Stats */}
@@ -94,7 +98,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </Card>}
+          </Card>
         </div>
       </section>
 
