@@ -31,11 +31,11 @@ export default function Home() {
               Now in beta — free audits for early users
             </div>
             <h1 className="text-5xl md:text-7xl font-black tracking-tight text-white leading-[1.05] mb-8">
-              See why their LinkedIn<br />
+              See why their profile<br />
               <span className="gradient-text">grows faster than yours</span>
             </h1>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
-              Enter any LinkedIn profile. Get a complete strategy breakdown — content pillars, posting patterns, engagement tactics, and an action playbook to close the gap.
+              Enter any LinkedIn or X profile. Get a complete strategy breakdown — content pillars, posting patterns, engagement tactics, and an action playbook to close the gap.
             </p>
           </div>
           <div className="animate-fade-in-delay flex flex-col sm:flex-row gap-4 justify-center">

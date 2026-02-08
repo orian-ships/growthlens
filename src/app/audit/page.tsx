@@ -18,6 +18,9 @@ export default function AuditPage() {
   const [audit, setAudit] = useState<ProfileAudit | null>(null);
   const [captchaToken, setCaptchaToken] = useState("");
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [platform, setPlatform] = useState<"linkedin" | "twitter">("linkedin");
+  const [twitterConnected, setTwitterConnected] = useState(false);
+  const [connectingTwitter, setConnectingTwitter] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,7 +100,58 @@ export default function AuditPage() {
     }
   };
 
-  // Email gate removed for growth phase — optimize for virality over friction
+  const handleConnectTwitter = async () => {
+    setConnectingTwitter(true);
+    try {
+      const userId = `gl_${Date.now()}`;
+      localStorage.setItem("gl_user_id", userId);
+      const res = await fetch("/api/connect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, toolkit: "twitter", callbackUrl: `${window.location.origin}/callback` }),
+      });
+      const data = await res.json();
+      if (data.connected) {
+        setTwitterConnected(true);
+        localStorage.setItem("gl_twitter_connected", "true");
+        localStorage.setItem("gl_twitter_account_id", data.connectedAccountId);
+      } else if (data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      }
+    } catch (err) {
+      console.error("[GL] Twitter connect error:", err);
+    }
+    setConnectingTwitter(false);
+  };
+
+  const handleTwitterAudit = async () => {
+    setLoading(true);
+    try {
+      const userId = localStorage.getItem("gl_user_id");
+      const handle = url.replace(/^@/, "").replace(/https?:\/\/(x\.com|twitter\.com)\//, "").replace(/\/.*$/, "").trim();
+      const res = await fetch("/api/twitter/audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: handle, userId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        // TODO: Transform Twitter data into ProfileAudit format and display
+        console.log("[GL] Twitter audit data:", data);
+        alert("Twitter audit data received! Full scoring coming soon.");
+      } else {
+        console.error("[GL] Twitter audit failed:", data.error);
+      }
+    } catch (err) {
+      console.error("[GL] Twitter audit error:", err);
+    }
+    setLoading(false);
+  };
+
+  // Check Twitter connection on mount
+  if (typeof window !== "undefined" && !twitterConnected && localStorage.getItem("gl_twitter_connected") === "true") {
+    setTwitterConnected(true);
+  }
 
   if (loading) {
     return (
@@ -123,15 +177,72 @@ export default function AuditPage() {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="max-w-xl w-full text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: 'Satoshi, sans-serif' }}>Audit a LinkedIn Profile</h1>
-          <p className="text-slate-400 mb-10 text-lg">Paste any LinkedIn profile URL to get a full strategy breakdown</p>
-          <form onSubmit={handleSubmit} className="flex gap-3">
-            <input type="url" required placeholder="https://linkedin.com/in/username" value={url} onChange={(e) => setUrl(e.target.value)}
-              className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent/40 transition-colors text-lg" />
-            <button type="submit" disabled={!captchaToken} className="bg-accent hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed text-navy font-bold px-8 py-4 rounded-xl text-lg transition-colors whitespace-nowrap">Analyze</button>
-          </form>
-          <Captcha onVerify={setCaptchaToken} />
-          <p className="text-slate-500 text-sm mt-4">Try it with any LinkedIn URL — we&apos;ll show a demo audit</p>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4" style={{ fontFamily: 'Satoshi, sans-serif' }}>Audit Your Growth</h1>
+          <p className="text-slate-400 mb-8 text-lg">Analyze any LinkedIn or X profile for a full strategy breakdown</p>
+
+          {/* Platform Toggle */}
+          <div className="flex justify-center gap-2 mb-8">
+            <button
+              onClick={() => setPlatform("linkedin")}
+              className={`px-6 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                platform === "linkedin"
+                  ? "bg-[#0A66C2]/20 text-[#0A66C2] border border-[#0A66C2]/30"
+                  : "bg-white/[0.03] text-slate-400 border border-white/[0.08] hover:border-white/20"
+              }`}
+            >
+              <span className="mr-2">💼</span>LinkedIn
+            </button>
+            <button
+              onClick={() => setPlatform("twitter")}
+              className={`px-6 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                platform === "twitter"
+                  ? "bg-white/10 text-white border border-white/30"
+                  : "bg-white/[0.03] text-slate-400 border border-white/[0.08] hover:border-white/20"
+              }`}
+            >
+              <span className="mr-2">𝕏</span>X / Twitter
+            </button>
+          </div>
+
+          {platform === "linkedin" ? (
+            <>
+              <form onSubmit={handleSubmit} className="flex gap-3">
+                <input type="url" required placeholder="https://linkedin.com/in/username" value={url} onChange={(e) => setUrl(e.target.value)}
+                  className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent/40 transition-colors text-lg" />
+                <button type="submit" disabled={!captchaToken} className="bg-accent hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed text-navy font-bold px-8 py-4 rounded-xl text-lg transition-colors whitespace-nowrap">Analyze</button>
+              </form>
+              <Captcha onVerify={setCaptchaToken} />
+              <p className="text-slate-500 text-sm mt-4">Paste any LinkedIn profile URL to get started</p>
+            </>
+          ) : (
+            <>
+              {!twitterConnected ? (
+                <div className="space-y-4">
+                  <p className="text-slate-400 text-sm">Connect your X account to audit profiles</p>
+                  <button
+                    onClick={handleConnectTwitter}
+                    disabled={connectingTwitter}
+                    className="bg-white hover:bg-white/90 disabled:opacity-40 text-black font-bold px-8 py-4 rounded-xl text-lg transition-colors"
+                  >
+                    {connectingTwitter ? "Connecting..." : "Connect X Account"}
+                  </button>
+                  <p className="text-slate-600 text-xs">OAuth via Composio — we never store your password</p>
+                </div>
+              ) : (
+                <>
+                  <form onSubmit={(e) => { e.preventDefault(); handleTwitterAudit(); }} className="flex gap-3">
+                    <input type="text" required placeholder="@username or x.com/username" value={url} onChange={(e) => setUrl(e.target.value)}
+                      className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent/40 transition-colors text-lg" />
+                    <button type="submit" className="bg-white hover:bg-white/90 text-black font-bold px-8 py-4 rounded-xl text-lg transition-colors whitespace-nowrap">Analyze</button>
+                  </form>
+                  <div className="flex items-center justify-center gap-2 mt-3">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                    <span className="text-slate-500 text-sm">X account connected</span>
+                  </div>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
     );
