@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA"; // test key
+const SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || "";
 
 export async function POST(req: NextRequest) {
   const { token } = await req.json();

@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // Cloudflare Turnstile test key (always passes) — replace with real key in production
-const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAACZS7K3kP8Q-I3QD";
 
 declare global {
   interface Window {
