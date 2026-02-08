@@ -18,7 +18,7 @@ export interface ProfileAudit {
     weeklyFrequency: number[];
     contentTypes: { type: string; percentage: number; color: string }[];
     contentPillars: { topic: string; percentage: number }[];
-    topPosts: { text: string; likes: number; comments: number; shares: number; type: string; url?: string }[];
+    topPosts: { text: string; likes: number; comments: number; shares: number; type: string; url?: string; pillar?: string; postedAt?: number }[];
     hookPatterns: { pattern: string; percentage: number }[];
     hashtagStrategy: { avg: number; topHashtags: string[] };
     postingSchedule: number[][];
@@ -69,9 +69,18 @@ export const mockProfileA: ProfileAudit = {
       { topic: "Industry News", percentage: 5 },
     ],
     topPosts: [
-      { text: "I got rejected by 47 investors before raising our $12M Series A. Here's what I learned about persistence...", likes: 4200, comments: 380, shares: 120, type: "Text" },
-      { text: "The SaaS pricing mistake that cost us $2M in ARR (and how we fixed it in 30 days)", likes: 3100, comments: 290, shares: 95, type: "Carousel" },
-      { text: "Stop building features. Start solving problems. A thread on product-market fit →", likes: 2800, comments: 210, shares: 88, type: "Text" },
+      { text: "I got rejected by 47 investors before raising our $12M Series A. Here's what I learned about persistence...", likes: 4200, comments: 380, shares: 120, type: "Text", pillar: "Personal Stories", postedAt: Date.now() - 7 * 86400000 },
+      { text: "The SaaS pricing mistake that cost us $2M in ARR (and how we fixed it in 30 days)", likes: 3100, comments: 290, shares: 95, type: "Carousel", pillar: "Case Studies", postedAt: Date.now() - 14 * 86400000 },
+      { text: "Stop building features. Start solving problems. A thread on product-market fit →", likes: 2800, comments: 210, shares: 88, type: "Text", pillar: "Thought Leadership", postedAt: Date.now() - 21 * 86400000 },
+      { text: "5 frameworks every SaaS founder needs to know for pricing strategy. Thread 🧵", likes: 2400, comments: 180, shares: 72, type: "Carousel", pillar: "How-To / Educational", postedAt: Date.now() - 5 * 86400000 },
+      { text: "Just hit $10M ARR! Here's the exact playbook we used in the last 18 months.", likes: 5100, comments: 420, shares: 200, type: "Text", pillar: "Company Updates", postedAt: Date.now() - 3 * 86400000 },
+      { text: "Unpopular opinion: Most B2B SaaS companies don't have a product problem. They have a positioning problem.", likes: 1900, comments: 310, shares: 65, type: "Text", pillar: "Thought Leadership", postedAt: Date.now() - 10 * 86400000 },
+      { text: "Shoutout to @markjohnson for an incredible talk at SaaStr Annual. The insights on PLG were 🔥", likes: 890, comments: 45, shares: 12, type: "Text", pillar: "Networking / Shoutouts", postedAt: Date.now() - 12 * 86400000 },
+      { text: "We're hiring a Head of Growth! If you love SaaS and data, let's talk. Remote-first, great team.", likes: 650, comments: 89, shares: 34, type: "Text", pillar: "Career & Hiring", postedAt: Date.now() - 8 * 86400000 },
+      { text: "New report from McKinsey on AI adoption in B2B SaaS. Key takeaway: 73% of companies plan to increase AI spend.", likes: 1200, comments: 95, shares: 55, type: "Text", pillar: "Industry News", postedAt: Date.now() - 15 * 86400000 },
+      { text: "Our team just finished a 2-day offsite. The energy was incredible. Culture isn't perks — it's purpose.", likes: 1500, comments: 120, shares: 28, type: "Image", pillar: "Culture & Values", postedAt: Date.now() - 18 * 86400000 },
+      { text: "Agree or disagree: Cold email is dead in 2024. Drop your take below 👇", likes: 2200, comments: 450, shares: 40, type: "Text", pillar: "Engagement Bait", postedAt: Date.now() - 2 * 86400000 },
+      { text: "Client spotlight: How we helped Acme Corp go from $2M to $8M ARR in 12 months using our growth framework.", likes: 1800, comments: 140, shares: 68, type: "Carousel", pillar: "Case Studies", postedAt: Date.now() - 25 * 86400000 },
     ],
     hookPatterns: [
       { pattern: "Personal story", percentage: 35 },
@@ -138,9 +147,9 @@ export const mockProfileB: ProfileAudit = {
       { topic: "Random/Mixed", percentage: 30 },
     ],
     topPosts: [
-      { text: "Excited to announce our new feature launch! Check it out →", likes: 45, comments: 12, shares: 3, type: "Text" },
-      { text: "What's your favorite IDE? Poll below 👇", likes: 82, comments: 34, shares: 5, type: "Poll" },
-      { text: "Great event today at TechCrunch Disrupt. Lots of interesting people!", likes: 28, comments: 8, shares: 1, type: "Text" },
+      { text: "Excited to announce our new feature launch! Check it out →", likes: 45, comments: 12, shares: 3, type: "Text", pillar: "Company Updates", postedAt: Date.now() - 7 * 86400000 },
+      { text: "What's your favorite IDE? Poll below 👇", likes: 82, comments: 34, shares: 5, type: "Poll", pillar: "Engagement Bait", postedAt: Date.now() - 14 * 86400000 },
+      { text: "Great event today at TechCrunch Disrupt. Lots of interesting people!", likes: 28, comments: 8, shares: 1, type: "Text", pillar: "Networking / Shoutouts", postedAt: Date.now() - 21 * 86400000 },
     ],
     hookPatterns: [
       { pattern: "Announcement", percentage: 45 },

@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { getRecentPosts, extractBigrams, clamp } from "./utils";
+import { classifyPost } from "./pillar-classifier";
 
 export interface ContentResult {
   postsPerWeek: number;
   weeklyFrequency: number[];
   contentTypes: { type: string; percentage: number; color: string }[];
   contentPillars: { topic: string; percentage: number }[];
-  topPosts: { text: string; likes: number; comments: number; shares: number; type: string; url?: string }[];
+  topPosts: { text: string; likes: number; comments: number; shares: number; type: string; url?: string; pillar: string; postedAt?: number }[];
   hookPatterns: { pattern: string; percentage: number }[];
   hashtagStrategy: { avg: number; topHashtags: string[] };
   postingSchedule: number[][];
@@ -76,14 +77,19 @@ export function scoreContent(posts: any[]): { result: ContentResult; score: numb
     ((b.engagement?.likes || 0) + (b.engagement?.comments || 0)) -
     ((a.engagement?.likes || 0) + (a.engagement?.comments || 0))
   );
-  const topPosts = sortedPosts.slice(0, 5).map((p: any) => ({
-    text: (p.content || "").slice(0, 150) + ((p.content || "").length > 150 ? "..." : ""),
-    likes: p.engagement?.likes || 0,
-    comments: p.engagement?.comments || 0,
-    shares: p.engagement?.shares || 0,
-    type: p.postImages?.length ? "image" : p.type || "text",
-    url: p.linkedinUrl || undefined,
-  }));
+  const topPosts = sortedPosts.slice(0, 50).map((p: any) => {
+    const content = p.content || "";
+    return {
+      text: content.slice(0, 150) + (content.length > 150 ? "..." : ""),
+      likes: p.engagement?.likes || 0,
+      comments: p.engagement?.comments || 0,
+      shares: p.engagement?.shares || 0,
+      type: p.postImages?.length ? "image" : p.type || "text",
+      url: p.linkedinUrl || undefined,
+      pillar: classifyPost(content),
+      postedAt: p.postedAt?.timestamp || undefined,
+    };
+  });
 
   // --- Hook patterns ---
   const hookTypes: Record<string, number> = { Question: 0, Statement: 0, Story: 0, Statistic: 0, Contrarian: 0 };

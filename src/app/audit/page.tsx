@@ -7,6 +7,8 @@ import { Card, CardHeader, StatCard, MetricRow, Badge } from "@/components/ui";
 import { generateRecommendations } from "@/lib/recommendations";
 import { storeAudit } from "@/lib/convex";
 import Captcha from "@/components/Captcha";
+import PostLibrary from "@/components/PostLibrary";
+import CompareCTA from "@/components/CompareCTA";
 
 
 export default function AuditPage() {
@@ -260,20 +262,7 @@ export default function AuditPage() {
             </div>
           </Card>
 
-          {/* Content Pillars */}
-          <Card>
-            <CardHeader title="Content Pillars" />
-            <div className="space-y-4">
-              {contentStrategy.contentPillars.map((pillar, i) => (
-                <div key={i}>
-                  <div className="flex justify-between text-sm mb-1.5"><span className="text-slate-300">{pillar.topic}</span><span className="text-slate-400">{pillar.percentage}%</span></div>
-                  <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
-                    <div className="h-full rounded-full bg-accent" style={{ width: `${pillar.percentage}%`, opacity: 1 - i * 0.15 }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
+          {/* Hook Patterns moved here since Content Pillars is now in PostLibrary */}
 
           {/* Hook Patterns */}
           <Card>
@@ -333,32 +322,8 @@ export default function AuditPage() {
           </Card>
         )}
 
-        {/* Top Posts */}
-        <Card>
-          <CardHeader title="Top Performing Posts" />
-          <div className="space-y-3">
-            {contentStrategy.topPosts.map((post, i) => {
-              const Wrapper = post.url ? "a" : "div";
-              const linkProps = post.url ? { href: post.url, target: "_blank", rel: "noopener noreferrer" } : {};
-              return (
-                <Wrapper key={i} {...linkProps} className={`flex items-start justify-between gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] ${post.url ? "hover:border-accent/20 hover:bg-white/[0.04] transition-colors cursor-pointer" : ""}`}>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-accent/10 text-accent">{post.type}</span>
-                      {post.url && <span className="text-[10px] text-slate-500">↗ View on LinkedIn</span>}
-                    </div>
-                    <p className="text-slate-300 text-sm leading-relaxed">&ldquo;{post.text}&rdquo;</p>
-                  </div>
-                  <div className="flex gap-4 text-xs text-slate-400 shrink-0 pt-1">
-                    <span>❤️ {post.likes.toLocaleString()}</span>
-                    <span>💬 {post.comments}</span>
-                    <span>🔄 {post.shares}</span>
-                  </div>
-                </Wrapper>
-              );
-            })}
-          </div>
-        </Card>
+        {/* Post Library with Pillar Distribution */}
+        <PostLibrary posts={contentStrategy.topPosts} followers={profile.followers} />
 
         {/* Hashtags + Schedule */}
         <div className="grid md:grid-cols-2 gap-6">
@@ -376,6 +341,9 @@ export default function AuditPage() {
             <HeatmapGrid data={contentStrategy.postingSchedule} />
           </Card>
         </div>
+
+        {/* Compare CTA */}
+        <CompareCTA profileName={profile.name} profileUrl={profile.url} />
 
         {/* Back */}
         <div className="text-center pt-4">

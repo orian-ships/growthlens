@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { mockProfileA, mockProfileB, type ProfileAudit } from "@/lib/mock-data";
 import { ScoreRing, ProgressBar, DonutChart } from "@/components/charts";
 import { Card, CardHeader, Badge, StatCard } from "@/components/ui";
@@ -76,8 +77,13 @@ async function fetchAudit(profileUrl: string): Promise<ProfileAudit> {
 }
 
 export default function ComparePage() {
-  const [urlA, setUrlA] = useState("");
-  const [urlB, setUrlB] = useState("");
+  return <Suspense><ComparePageInner /></Suspense>;
+}
+
+function ComparePageInner() {
+  const searchParams = useSearchParams();
+  const [urlA, setUrlA] = useState(searchParams.get("profileA") || "");
+  const [urlB, setUrlB] = useState(searchParams.get("profileB") || "");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState("");

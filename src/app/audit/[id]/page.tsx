@@ -5,6 +5,9 @@ import type { ProfileAudit } from "@/lib/mock-data";
 import { DonutChart, BarChart, HeatmapGrid, ScoreRing, ProgressBar, RadarChart } from "@/components/charts";
 import { Card, CardHeader, StatCard, MetricRow, Badge } from "@/components/ui";
 import { generateRecommendations } from "@/lib/recommendations";
+import PostLibrary from "@/components/PostLibrary";
+import CompareCTA from "@/components/CompareCTA";
+import TrackButton from "@/components/TrackButton";
 
 function ShareSection({ audit, auditId }: { audit: ProfileAudit; auditId: string }) {
   const [copied, setCopied] = useState(false);
@@ -131,6 +134,7 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
             </div>
           </div>
           <div className="flex items-center gap-4">
+            <TrackButton profileUrl={audit.profile.url} />
             <button onClick={handlePDF} disabled={pdfLoading} className="px-4 py-2 rounded-xl border border-white/[0.08] text-slate-300 hover:text-white hover:border-white/20 transition-colors text-sm disabled:opacity-50">
               {pdfLoading ? "Generating PDF..." : "📄 Download PDF"}
             </button>
@@ -247,31 +251,8 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
           </Card>
         )}
 
-        <Card>
-          <CardHeader title="Top Performing Posts" />
-          <div className="space-y-3">
-            {contentStrategy.topPosts.map((post, i) => {
-              const Wrapper = post.url ? "a" : "div";
-              const linkProps = post.url ? { href: post.url, target: "_blank", rel: "noopener noreferrer" } : {};
-              return (
-                <Wrapper key={i} {...linkProps} className={`flex items-start justify-between gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] ${post.url ? "hover:border-accent/20 hover:bg-white/[0.04] transition-colors cursor-pointer" : ""}`}>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-accent/10 text-accent">{post.type}</span>
-                      {post.url && <span className="text-[10px] text-slate-500">↗ View on LinkedIn</span>}
-                    </div>
-                    <p className="text-slate-300 text-sm leading-relaxed">&ldquo;{post.text}&rdquo;</p>
-                  </div>
-                  <div className="flex gap-4 text-xs text-slate-400 shrink-0 pt-1">
-                    <span>❤️ {post.likes.toLocaleString()}</span>
-                    <span>💬 {post.comments}</span>
-                    <span>🔄 {post.shares}</span>
-                  </div>
-                </Wrapper>
-              );
-            })}
-          </div>
-        </Card>
+        {/* Post Library with Pillar Distribution */}
+        <PostLibrary posts={contentStrategy.topPosts} followers={profile.followers} />
 
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
@@ -287,6 +268,9 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
             <HeatmapGrid data={contentStrategy.postingSchedule} />
           </Card>
         </div>
+
+        {/* Compare CTA */}
+        <CompareCTA profileName={profile.name} profileUrl={profile.url} />
 
         <div className="text-center pt-4">
           <a href="/audit" className="text-slate-500 hover:text-white transition-colors text-sm">← Run a new audit</a>
