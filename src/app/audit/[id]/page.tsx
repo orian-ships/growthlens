@@ -68,6 +68,7 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
   const [audit, setAudit] = useState<ProfileAudit | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   useEffect(() => {
     getAudit(id).then((data) => {
@@ -102,16 +103,15 @@ export default function SavedAuditPage({ params }: { params: Promise<{ id: strin
 
   const { profile, contentStrategy, engagement } = audit;
   const { recommendations, summary } = generateRecommendations(audit);
-  const [pdfLoading, setPdfLoading] = useState(false);
 
-  const handlePDF = useCallback(async () => {
+  const handlePDF = async () => {
     setPdfLoading(true);
     try {
       const { exportAuditPDF } = await import("@/lib/pdf-export");
       await exportAuditPDF("audit-content", profile.name);
     } catch (e) { console.error("PDF export failed", e); }
     setPdfLoading(false);
-  }, [profile.name]);
+  };
 
   return (
     <div className="min-h-screen py-12 px-6">
