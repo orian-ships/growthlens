@@ -15,6 +15,7 @@ export default function AuditPage() {
   const [loading, setLoading] = useState(false);
   const [audit, setAudit] = useState<ProfileAudit | null>(null);
   const [captchaToken, setCaptchaToken] = useState("");
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,7 +132,6 @@ export default function AuditPage() {
 
   const { profile, contentStrategy, engagement } = audit;
   const { recommendations, summary } = generateRecommendations(audit);
-  const [pdfLoading, setPdfLoading] = useState(false);
 
   const handlePDF = async () => {
     setPdfLoading(true);
