@@ -13,17 +13,40 @@ export default function AuditPage() {
     e.preventDefault();
     setLoading(true);
     try {
+      // Start the Apify runs
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ profileUrl: url }),
       });
       const data = await res.json();
+
       if (data.audit) {
         setAudit(data.audit);
-      } else {
-        setAudit(mockProfileA);
+        setLoading(false);
+        return;
       }
+
+      if (data.status === "running") {
+        // Poll for completion
+        const { profileRunId, postsRunId, profileDatasetId, postsDatasetId } = data;
+        const params = new URLSearchParams({ profileRunId, postsRunId, profileDatasetId, postsDatasetId });
+
+        for (let i = 0; i < 60; i++) {
+          await new Promise(r => setTimeout(r, 3000));
+          const statusRes = await fetch(`/api/analyze/status?${params}`);
+          const statusData = await statusRes.json();
+
+          if (statusData.status === "complete") {
+            setAudit(statusData.audit);
+            setLoading(false);
+            return;
+          }
+        }
+      }
+
+      // Timeout or error — use mock
+      setAudit(mockProfileA);
     } catch {
       setAudit(mockProfileA);
     } finally {
