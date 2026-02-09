@@ -34,10 +34,10 @@ export async function POST(req: NextRequest) {
     ]);
 
     console.log('[GL] Twitter profile data:', JSON.stringify(profileData).slice(0, 500));
-    console.log('[GL] Twitter posts count:', postsData?.data?.length || 0);
+    console.log('[GL] Twitter posts count:', (postsData as any)?.data?.length || 0);
 
     // Transform into ProfileAudit format
-    const audit = transformTwitterData(profileData, postsData);
+    const audit = transformTwitterData(profileData as any, postsData as any);
 
     // Store in Convex
     let auditId: string | null = null;
