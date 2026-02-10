@@ -32,6 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </nav>
           <main className="pt-20">{children}</main>
+          <footer className="py-14 px-6 md:px-8 border-t border-white/[0.06] text-center">
+            <p className="text-slate-500 text-sm">© 2026 GrowthLens. Built by <a href="https://orian.dev" className="text-slate-400 hover:text-white transition-colors">Orián</a> on behalf of <a href="https://happyoperators.com" className="text-slate-400 hover:text-white transition-colors">Happy Operators Inc</a></p>
+          </footer>
         </AuthProvider>
       </body>
     </html>

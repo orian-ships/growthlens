@@ -348,10 +348,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-14 px-6 md:px-8 section-divider text-center">
-        <p className="text-slate-500 text-sm">© 2026 GrowthLens. Built by <a href="https://orian.dev" className="text-slate-400 hover:text-white transition-colors">Orión</a> on behalf of <a href="https://happyoperators.com" className="text-slate-400 hover:text-white transition-colors">Happy Operators Inc</a></p>
-      </footer>
+{/* Footer is in layout.tsx */}
     </div>
   );
 }
