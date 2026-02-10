@@ -67,3 +67,18 @@ export async function scrapeLinkedInPosts(profileUrl: string, maxPosts = 50) {
   await waitForRun(run.id);
   return getDatasetItems(run.defaultDatasetId);
 }
+
+// === Twitter / X via Apify ===
+const TWITTER_ACTOR = "scraper_one/x-profile-posts-scraper";
+
+export async function startTwitterRun(username: string, tweetsDesired = 50): Promise<ApifyRunResult> {
+  const handle = username.replace(/^@/, "").replace(/https?:\/\/(x\.com|twitter\.com)\//, "").replace(/\/.*$/, "").trim();
+  return runApifyActor(TWITTER_ACTOR, {
+    profileUrls: [`https://x.com/${handle}`],
+    tweetsDesired,
+  });
+}
+
+export async function getTwitterResults(datasetId: string): Promise<unknown[]> {
+  return getDatasetItems(datasetId);
+}

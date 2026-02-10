@@ -19,21 +19,27 @@ export default function AuditPage() {
   const [captchaToken, setCaptchaToken] = useState("");
   const [pdfLoading, setPdfLoading] = useState(false);
   const [platform, setPlatform] = useState<"linkedin" | "twitter">("linkedin");
-  const [twitterConnected, setTwitterConnected] = useState(false);
-  const [connectingTwitter, setConnectingTwitter] = useState(false);
+
+  const isTwitterInput = (input: string) => {
+    return /^@/.test(input) || /x\.com\//.test(input) || /twitter\.com\//.test(input);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    console.log("[GL] Starting audit for:", url);
+
+    // Auto-detect platform from input
+    const effectivePlatform = isTwitterInput(url) ? "twitter" : platform;
+    console.log("[GL] Starting audit for:", url, "platform:", effectivePlatform);
+
     try {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profileUrl: url }),
+        body: JSON.stringify({ profileUrl: url, platform: effectivePlatform }),
       });
       const data = await res.json();
-      console.log("[GL] API response:", { status: data.status, source: data.source, hasAudit: !!data.audit });
+      console.log("[GL] API response:", { status: data.status, source: data.source, platform: data.platform });
 
       const saveAndRedirect = async (auditData: ProfileAudit, source: string) => {
         try {
@@ -58,19 +64,27 @@ export default function AuditPage() {
 
       if (data.audit) {
         const saved = await saveAndRedirect(data.audit, data.source || "mock");
-        if (!saved) {
-          console.log("[GL] Store failed, rendering inline");
-          setAudit(data.audit);
-        }
+        if (!saved) setAudit(data.audit);
         setLoading(false);
         return;
       }
 
       if (data.status === "running") {
-        const { profileRunId, postsRunId, profileDatasetId, postsDatasetId } = data;
-        const params = new URLSearchParams({ profileRunId, postsRunId, profileDatasetId, postsDatasetId });
-        console.log("[GL] Polling for completion...");
+        // Build poll params based on platform
+        const params = new URLSearchParams();
+        if (data.platform === "twitter") {
+          params.set("platform", "twitter");
+          params.set("twitterRunId", data.twitterRunId);
+          params.set("twitterDatasetId", data.twitterDatasetId);
+        } else {
+          params.set("platform", "linkedin");
+          params.set("profileRunId", data.profileRunId);
+          params.set("postsRunId", data.postsRunId);
+          params.set("profileDatasetId", data.profileDatasetId);
+          params.set("postsDatasetId", data.postsDatasetId);
+        }
 
+        console.log("[GL] Polling for completion...");
         for (let i = 0; i < 60; i++) {
           await new Promise(r => setTimeout(r, 3000));
           const statusRes = await fetch(`/api/analyze/status?${params}`);
@@ -80,10 +94,7 @@ export default function AuditPage() {
           if (statusData.status === "complete") {
             console.log("[GL] Audit complete! Score:", statusData.audit?.overallScore);
             const saved = await saveAndRedirect(statusData.audit, statusData.source || "live");
-            if (!saved) {
-              console.log("[GL] Store failed, rendering inline");
-              setAudit(statusData.audit);
-            }
+            if (!saved) setAudit(statusData.audit);
             setLoading(false);
             return;
           }
@@ -100,76 +111,17 @@ export default function AuditPage() {
     }
   };
 
-  const handleConnectTwitter = async () => {
-    setConnectingTwitter(true);
-    try {
-      const userId = `gl_${Date.now()}`;
-      localStorage.setItem("gl_user_id", userId);
-      const res = await fetch("/api/connect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, toolkit: "twitter", callbackUrl: `${window.location.origin}/callback` }),
-      });
-      const data = await res.json();
-      if (data.connected) {
-        setTwitterConnected(true);
-        localStorage.setItem("gl_twitter_connected", "true");
-        localStorage.setItem("gl_twitter_account_id", data.connectedAccountId);
-      } else if (data.redirectUrl) {
-        window.location.href = data.redirectUrl;
-      }
-    } catch (err) {
-      console.error("[GL] Twitter connect error:", err);
-    }
-    setConnectingTwitter(false);
-  };
-
-  const handleTwitterAudit = async () => {
-    setLoading(true);
-    try {
-      const userId = localStorage.getItem("gl_user_id");
-      const handle = url.replace(/^@/, "").replace(/https?:\/\/(x\.com|twitter\.com)\//, "").replace(/\/.*$/, "").trim();
-      console.log("[GL] Starting Twitter audit for @" + handle);
-      const res = await fetch("/api/twitter/audit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: handle, userId }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        console.log("[GL] Twitter audit complete! Score:", data.audit?.overallScore);
-        if (data.auditId) {
-          router.push(`/audit/${data.auditId}`);
-          return;
-        }
-        // Fallback: render inline
-        setAudit(data.audit);
-      } else {
-        console.error("[GL] Twitter audit failed:", data.error);
-        alert("Audit failed: " + (data.error || "Unknown error"));
-      }
-    } catch (err) {
-      console.error("[GL] Twitter audit error:", err);
-      alert("Something went wrong. Check console for details.");
-    }
-    setLoading(false);
-  };
-
-  // Check Twitter connection on mount
-  if (typeof window !== "undefined" && !twitterConnected && localStorage.getItem("gl_twitter_connected") === "true") {
-    setTwitterConnected(true);
-  }
-
   if (loading) {
+    const isTwitter = isTwitterInput(url) || platform === "twitter";
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-accent/30 border-t-accent rounded-full mx-auto mb-6" style={{ animation: "spin-slow 1s linear infinite" }} />
           <h2 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'Satoshi, sans-serif' }}>Analyzing profile...</h2>
-          <p className="text-slate-400">{platform === "twitter" ? "Fetching tweets, analyzing patterns, generating insights" : "Scraping posts, analyzing patterns, generating insights"}</p>
+          <p className="text-slate-400">{isTwitter ? "Fetching tweets, analyzing patterns, generating insights" : "Scraping posts, analyzing patterns, generating insights"}</p>
           <div className="mt-8 space-y-3 max-w-xs mx-auto text-left">
-            {(platform === "twitter"
-              ? ["Connecting to X API", "Fetching recent tweets", "Analyzing content patterns", "Generating audit report"]
+            {(isTwitter
+              ? ["Connecting to X scraper", "Fetching recent tweets", "Analyzing content patterns", "Generating audit report"]
               : ["Fetching profile data", "Scraping recent posts", "Analyzing content patterns", "Generating audit report"]
             ).map((step, i) => (
               <div key={i} className="flex items-center gap-3 text-sm text-slate-400 animate-fade-in" style={{ animationDelay: `${i * 0.6}s` }}>
@@ -214,45 +166,23 @@ export default function AuditPage() {
             </button>
           </div>
 
-          {platform === "linkedin" ? (
-            <>
-              <form onSubmit={handleSubmit} className="flex gap-3">
-                <input type="url" required placeholder="https://linkedin.com/in/username" value={url} onChange={(e) => setUrl(e.target.value)}
-                  className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent/40 transition-colors text-lg" />
-                <button type="submit" disabled={!captchaToken} className="bg-accent hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed text-navy font-bold px-8 py-4 rounded-xl text-lg transition-colors whitespace-nowrap">Analyze</button>
-              </form>
-              <Captcha onVerify={setCaptchaToken} />
-              <p className="text-slate-500 text-sm mt-4">Paste any LinkedIn profile URL to get started</p>
-            </>
-          ) : (
-            <>
-              {!twitterConnected ? (
-                <div className="space-y-4">
-                  <p className="text-slate-400 text-sm">Connect your X account to audit profiles</p>
-                  <button
-                    onClick={handleConnectTwitter}
-                    disabled={connectingTwitter}
-                    className="bg-white hover:bg-white/90 disabled:opacity-40 text-black font-bold px-8 py-4 rounded-xl text-lg transition-colors"
-                  >
-                    {connectingTwitter ? "Connecting..." : "Connect X Account"}
-                  </button>
-                  <p className="text-slate-600 text-xs">OAuth via Composio — we never store your password</p>
-                </div>
-              ) : (
-                <>
-                  <form onSubmit={(e) => { e.preventDefault(); handleTwitterAudit(); }} className="flex gap-3">
-                    <input type="text" required placeholder="@username or x.com/username" value={url} onChange={(e) => setUrl(e.target.value)}
-                      className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent/40 transition-colors text-lg" />
-                    <button type="submit" className="bg-white hover:bg-white/90 text-black font-bold px-8 py-4 rounded-xl text-lg transition-colors whitespace-nowrap">Analyze</button>
-                  </form>
-                  <div className="flex items-center justify-center gap-2 mt-3">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                    <span className="text-slate-500 text-sm">X account connected</span>
-                  </div>
-                </>
-              )}
-            </>
-          )}
+          <form onSubmit={handleSubmit} className="flex gap-3">
+            <input
+              type={platform === "linkedin" ? "url" : "text"}
+              required
+              placeholder={platform === "linkedin" ? "https://linkedin.com/in/username" : "@username or https://x.com/username"}
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder:text-slate-600 focus:outline-none focus:border-accent/40 transition-colors text-lg"
+            />
+            <button type="submit" disabled={!captchaToken} className="bg-accent hover:bg-accent-dim disabled:opacity-40 disabled:cursor-not-allowed text-navy font-bold px-8 py-4 rounded-xl text-lg transition-colors whitespace-nowrap">
+              Analyze
+            </button>
+          </form>
+          <Captcha onVerify={setCaptchaToken} />
+          <p className="text-slate-500 text-sm mt-4">
+            {platform === "linkedin" ? "Paste any LinkedIn profile URL to get started" : "Enter an X/Twitter handle or profile URL — no login required"}
+          </p>
         </div>
       </div>
     );
@@ -382,8 +312,6 @@ export default function AuditPage() {
               <p className="text-xs text-slate-500 mt-3">Posts per week — last 12 weeks</p>
             </div>
           </Card>
-
-          {/* Hook Patterns moved here since Content Pillars is now in PostLibrary */}
 
           {/* Hook Patterns */}
           <Card>

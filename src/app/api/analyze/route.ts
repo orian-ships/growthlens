@@ -4,7 +4,8 @@ const APIFY_TOKEN = process.env.APIFY_TOKEN || "";
 
 export async function POST(req: NextRequest) {
   try {
-    const { profileUrl } = await req.json();
+    const body = await req.json();
+    const { profileUrl, platform = "linkedin" } = body;
     if (!profileUrl) {
       return NextResponse.json({ error: "profileUrl is required" }, { status: 400 });
     }
@@ -13,7 +14,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "APIFY_TOKEN not configured", source: "mock" }, { status: 200 });
     }
 
-    // Kick off both Apify runs in parallel — return run IDs immediately
+    if (platform === "twitter") {
+      // Extract handle from URL or @handle
+      const handle = profileUrl.replace(/^@/, "").replace(/https?:\/\/(x\.com|twitter\.com)\//, "").replace(/\/.*$/, "").trim();
+      const run = await startActor("scraper_one/x-profile-posts-scraper", {
+        profileUrls: [`https://x.com/${handle}`],
+        tweetsDesired: 50,
+      });
+
+      return NextResponse.json({
+        status: "running",
+        platform: "twitter",
+        twitterRunId: run.id,
+        twitterDatasetId: run.datasetId,
+      });
+    }
+
+    // LinkedIn: kick off both runs in parallel
     const [profileRun, postsRun] = await Promise.all([
       startActor("harvestapi/linkedin-profile-scraper", { urls: [profileUrl] }),
       startActor("harvestapi/linkedin-profile-posts", { profileUrls: [profileUrl], maxPosts: 50 }),
@@ -21,6 +38,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       status: "running",
+      platform: "linkedin",
       profileRunId: profileRun.id,
       postsRunId: postsRun.id,
       profileDatasetId: profileRun.datasetId,
