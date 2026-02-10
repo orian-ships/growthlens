@@ -16,8 +16,16 @@ export default function Home() {
   const [submitting, setSubmitting] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [auditCount, setAuditCount] = useState<number | null>(null);
+  const [recentAudits, setRecentAudits] = useState<Array<{ profileName: string; overallScore: number; overallGrade: string; _creationTime: number }>>([]);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    fetch(`${CONVEX_URL}/api/list-audits?limit=6`)
+      .then((r) => r.json())
+      .then((d) => { if (Array.isArray(d) && d.length > 0) setRecentAudits(d); })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     fetch(`${CONVEX_URL}/api/audit-count`)
@@ -42,6 +50,32 @@ export default function Home() {
       setSubmitting(false);
     }
   };
+
+  function anonymizeName(name: string): string {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length <= 1) return parts[0] || "User";
+    return `${parts[0]} ${parts[parts.length - 1][0]}.`;
+  }
+
+  function relativeTime(ts: number): string {
+    const diff = Date.now() - ts;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    const days = Math.floor(hrs / 24);
+    if (days === 1) return "yesterday";
+    if (days < 7) return `${days}d ago`;
+    return `${Math.floor(days / 7)}w ago`;
+  }
+
+  function scoreColor(score: number): string {
+    if (score >= 80) return "#10b981";
+    if (score >= 60) return "#3b82f6";
+    if (score >= 40) return "#f59e0b";
+    return "#ef4444";
+  }
 
   if (!mounted) {
     return <div className="min-h-screen" />;
@@ -133,6 +167,36 @@ export default function Home() {
           </Card>
         </div>
       </section>
+
+      {/* Recent Audits */}
+      {recentAudits.length > 0 && (
+        <section className="py-16 px-6 md:px-8 section-divider">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <span className="text-accent font-mono text-sm font-semibold tracking-wider uppercase">Recent Audits</span>
+              <p className="text-slate-500 text-sm mt-2">Real profiles, real scores</p>
+            </div>
+            <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+              {recentAudits.map((audit, i) => (
+                <Card key={i} className="p-4 shrink-0 w-[160px]">
+                  <div className="flex flex-col items-center gap-2 text-center">
+                    <div className="relative w-12 h-12">
+                      <svg className="w-12 h-12 -rotate-90" viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="3" />
+                        <circle cx="24" cy="24" r="20" fill="none" stroke={scoreColor(audit.overallScore)} strokeWidth="3" strokeLinecap="round" strokeDasharray={`${(audit.overallScore / 100) * 125.6} 125.6`} />
+                      </svg>
+                      <span className="absolute inset-0 flex items-center justify-center text-white text-xs font-bold">{audit.overallScore}</span>
+                    </div>
+                    <p className="text-white text-sm font-semibold truncate w-full">{anonymizeName(audit.profileName)}</p>
+                    <span className="text-accent text-xs font-mono font-bold">{audit.overallGrade}</span>
+                    <span className="text-slate-500 text-[10px]">{relativeTime(audit._creationTime)}</span>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Problem */}
       <section className="py-28 px-6 md:px-8 section-divider">
