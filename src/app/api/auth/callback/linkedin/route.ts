@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
     const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL || "https://patient-toucan-352.eu-west-1.convex.site";
     const convexRes = await fetch(`${CONVEX_URL}/api/auth/linkedin-login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-API-Key": process.env.GROWTHLENS_API_SECRET || "" },
       body: JSON.stringify({
         email: profile.email,
         name: profile.name || `${profile.given_name || ""} ${profile.family_name || ""}`.trim(),

@@ -4,18 +4,39 @@ import { api } from "./_generated/api";
 
 const http = httpRouter();
 
-// Store audit
-http.route({
-  path: "/api/store-audit",
-  method: "POST",
-  handler: httpAction(async (ctx, req) => {
-    const body = await req.json();
-    const id = await ctx.runMutation(api.audits.store, body);
-    return new Response(JSON.stringify({ id }), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
-  }),
-});
+// API key for write operations — must match CONVEX_API_SECRET env var on Vercel
+const API_SECRET = process.env.GROWTHLENS_API_SECRET || "";
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, X-API-Key",
+};
+
+function json(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { "Content-Type": "application/json", ...CORS_HEADERS },
+  });
+}
+
+function corsPreflightHandler() {
+  return httpAction(async () => new Response(null, { headers: CORS_HEADERS }));
+}
+
+/** Verify API key on write endpoints. Returns error Response or null if valid. */
+function verifyApiKey(req: Request): Response | null {
+  const key = req.headers.get("X-API-Key") || "";
+  if (!API_SECRET) return null; // No secret configured = skip check (dev mode)
+  if (key !== API_SECRET) {
+    return json({ error: "Unauthorized" }, 401);
+  }
+  return null;
+}
+
+// ============================================================
+// PUBLIC READ ENDPOINTS (no auth)
+// ============================================================
 
 // Get audit by ID
 http.route({
@@ -24,12 +45,10 @@ http.route({
   handler: httpAction(async (ctx, req) => {
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
-    if (!id) return new Response("Missing id", { status: 400 });
+    if (!id) return json({ error: "Missing id" }, 400);
     const audit = await ctx.runQuery(api.audits.getById, { id: id as any });
-    if (!audit) return new Response("Not found", { status: 404 });
-    return new Response(JSON.stringify(audit), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+    if (!audit) return json({ error: "Not found" }, 404);
+    return json(audit);
   }),
 });
 
@@ -39,24 +58,19 @@ http.route({
   method: "GET",
   handler: httpAction(async (ctx, req) => {
     const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get("limit") || "50");
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "20"), 50);
     const audits = await ctx.runQuery(api.audits.list, { limit });
-    return new Response(JSON.stringify(audits), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+    return json(audits);
   }),
 });
 
-// Store comparison
+// Audit count
 http.route({
-  path: "/api/store-comparison",
-  method: "POST",
-  handler: httpAction(async (ctx, req) => {
-    const body = await req.json();
-    const id = await ctx.runMutation(api.comparisons.store, body);
-    return new Response(JSON.stringify({ id }), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+  path: "/api/audit-count",
+  method: "GET",
+  handler: httpAction(async (ctx) => {
+    const count = await ctx.runQuery(api.audits.count, {});
+    return json({ count });
   }),
 });
 
@@ -67,12 +81,10 @@ http.route({
   handler: httpAction(async (ctx, req) => {
     const url = new URL(req.url);
     const id = url.searchParams.get("id");
-    if (!id) return new Response("Missing id", { status: 400 });
+    if (!id) return json({ error: "Missing id" }, 400);
     const comp = await ctx.runQuery(api.comparisons.getById, { id: id as any });
-    if (!comp) return new Response("Not found", { status: 404 });
-    return new Response(JSON.stringify(comp), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+    if (!comp) return json({ error: "Not found" }, 404);
+    return json(comp);
   }),
 });
 
@@ -82,78 +94,120 @@ http.route({
   method: "GET",
   handler: httpAction(async (ctx, req) => {
     const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get("limit") || "50");
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "20"), 50);
     const comps = await ctx.runQuery(api.comparisons.list, { limit });
-    return new Response(JSON.stringify(comps), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+    return json(comps);
   }),
 });
 
-// Waitlist join
+// Get feedback for an audit
+http.route({
+  path: "/api/feedback/check",
+  method: "GET",
+  handler: httpAction(async (ctx, req) => {
+    const url = new URL(req.url);
+    const auditId = url.searchParams.get("auditId");
+    if (!auditId) return json({ error: "Missing auditId" }, 400);
+    const fb = await ctx.runQuery(api.feedback.getByAuditId, { auditId });
+    return json(fb || null);
+  }),
+});
+
+// Get approved testimonials
+http.route({
+  path: "/api/testimonials",
+  method: "GET",
+  handler: httpAction(async (ctx, req) => {
+    const url = new URL(req.url);
+    const limit = Math.min(parseInt(url.searchParams.get("limit") || "10"), 20);
+    const testimonials = await ctx.runQuery(api.feedback.getApprovedTestimonials, { limit });
+    return json(testimonials);
+  }),
+});
+
+// ============================================================
+// PROTECTED WRITE ENDPOINTS (require X-API-Key header)
+// ============================================================
+
+// Store audit
+http.route({
+  path: "/api/store-audit",
+  method: "POST",
+  handler: httpAction(async (ctx, req) => {
+    const err = verifyApiKey(req);
+    if (err) return err;
+    const body = await req.json();
+    const id = await ctx.runMutation(api.audits.store, body);
+    return json({ id });
+  }),
+});
+
+http.route({ path: "/api/store-audit", method: "OPTIONS", handler: corsPreflightHandler() });
+
+// Store comparison
+http.route({
+  path: "/api/store-comparison",
+  method: "POST",
+  handler: httpAction(async (ctx, req) => {
+    const err = verifyApiKey(req);
+    if (err) return err;
+    const body = await req.json();
+    const id = await ctx.runMutation(api.comparisons.store, body);
+    return json({ id });
+  }),
+});
+
+http.route({ path: "/api/store-comparison", method: "OPTIONS", handler: corsPreflightHandler() });
+
+// Waitlist join — rate limit by requiring origin check
 http.route({
   path: "/api/waitlist-join",
   method: "POST",
   handler: httpAction(async (ctx, req) => {
+    const origin = req.headers.get("origin") || "";
+    const allowedOrigins = ["growthlens.xyz", "growthlens-blue.vercel.app", "localhost"];
+    if (!allowedOrigins.some(o => origin.includes(o))) {
+      return json({ error: "Forbidden" }, 403);
+    }
     const { email } = await req.json();
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+      return json({ error: "Invalid email" }, 400);
+    }
     const id = await ctx.runMutation(api.waitlist.join, { email });
-    return new Response(JSON.stringify({ id }), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+    return json({ id });
   }),
 });
 
-http.route({
-  path: "/api/waitlist-join",
-  method: "OPTIONS",
-  handler: httpAction(async () => new Response(null, {
-    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST", "Access-Control-Allow-Headers": "Content-Type" },
-  })),
-});
+http.route({ path: "/api/waitlist-join", method: "OPTIONS", handler: corsPreflightHandler() });
 
-// Audit count
+// Submit feedback — origin check
 http.route({
-  path: "/api/audit-count",
-  method: "GET",
-  handler: httpAction(async (ctx) => {
-    const count = await ctx.runQuery(api.audits.count, {});
-    return new Response(JSON.stringify({ count }), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+  path: "/api/feedback",
+  method: "POST",
+  handler: httpAction(async (ctx, req) => {
+    const origin = req.headers.get("origin") || "";
+    const allowedOrigins = ["growthlens.xyz", "growthlens-blue.vercel.app", "localhost"];
+    if (!allowedOrigins.some(o => origin.includes(o))) {
+      return json({ error: "Forbidden" }, 403);
+    }
+    const body = await req.json();
+    const id = await ctx.runMutation(api.feedback.submit, body);
+    return json({ id });
   }),
 });
 
-// CORS preflight
-http.route({
-  path: "/api/store-audit",
-  method: "OPTIONS",
-  handler: httpAction(async () => new Response(null, {
-    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST", "Access-Control-Allow-Headers": "Content-Type" },
-  })),
-});
+http.route({ path: "/api/feedback", method: "OPTIONS", handler: corsPreflightHandler() });
 
-http.route({
-  path: "/api/store-comparison",
-  method: "OPTIONS",
-  handler: httpAction(async () => new Response(null, {
-    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST", "Access-Control-Allow-Headers": "Content-Type" },
-  })),
-});
-
-// LinkedIn OAuth login
+// LinkedIn OAuth login — API key required
 http.route({
   path: "/api/auth/linkedin-login",
   method: "POST",
   handler: httpAction(async (ctx, req) => {
+    const err = verifyApiKey(req);
+    if (err) return err;
     const { email, name, linkedinSub, picture } = await req.json();
-    if (!email) {
-      return new Response(JSON.stringify({ error: "email required" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-      });
-    }
+    if (!email) return json({ error: "email required" }, 400);
 
-    // Find or create user
     const existing = await ctx.runQuery(api.users.getByEmail, { email });
     let userId: string;
 
@@ -178,68 +232,10 @@ http.route({
       });
     }
 
-    return new Response(JSON.stringify({ userId }), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
+    return json({ userId });
   }),
 });
 
-http.route({
-  path: "/api/auth/linkedin-login",
-  method: "OPTIONS",
-  handler: httpAction(async () => new Response(null, {
-    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST", "Access-Control-Allow-Headers": "Content-Type" },
-  })),
-});
-
-// Submit feedback
-http.route({
-  path: "/api/feedback",
-  method: "POST",
-  handler: httpAction(async (ctx, req) => {
-    const body = await req.json();
-    const id = await ctx.runMutation(api.feedback.submit, body);
-    return new Response(JSON.stringify({ id }), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
-  }),
-});
-
-http.route({
-  path: "/api/feedback",
-  method: "OPTIONS",
-  handler: httpAction(async () => new Response(null, {
-    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST", "Access-Control-Allow-Headers": "Content-Type" },
-  })),
-});
-
-// Get feedback for an audit
-http.route({
-  path: "/api/feedback/check",
-  method: "GET",
-  handler: httpAction(async (ctx, req) => {
-    const url = new URL(req.url);
-    const auditId = url.searchParams.get("auditId");
-    if (!auditId) return new Response("Missing auditId", { status: 400 });
-    const fb = await ctx.runQuery(api.feedback.getByAuditId, { auditId });
-    return new Response(JSON.stringify(fb || null), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
-  }),
-});
-
-// Get approved testimonials
-http.route({
-  path: "/api/testimonials",
-  method: "GET",
-  handler: httpAction(async (ctx, req) => {
-    const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get("limit") || "10");
-    const testimonials = await ctx.runQuery(api.feedback.getApprovedTestimonials, { limit });
-    return new Response(JSON.stringify(testimonials), {
-      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
-    });
-  }),
-});
+http.route({ path: "/api/auth/linkedin-login", method: "OPTIONS", handler: corsPreflightHandler() });
 
 export default http;

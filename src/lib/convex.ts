@@ -1,4 +1,5 @@
 const CONVEX_URL = process.env.NEXT_PUBLIC_CONVEX_URL || "https://patient-toucan-352.eu-west-1.convex.site";
+const API_SECRET = process.env.GROWTHLENS_API_SECRET || "";
 
 export async function storeAudit(data: {
   profileUrl: string;
@@ -11,7 +12,7 @@ export async function storeAudit(data: {
 }): Promise<string> {
   const res = await fetch(`${CONVEX_URL}/api/store-audit`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-API-Key": API_SECRET },
     body: JSON.stringify(data),
   });
   const { id } = await res.json();
@@ -41,7 +42,7 @@ export async function storeComparison(data: {
 }): Promise<string> {
   const res = await fetch(`${CONVEX_URL}/api/store-comparison`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-API-Key": API_SECRET },
     body: JSON.stringify(data),
   });
   const { id } = await res.json();
@@ -57,7 +58,7 @@ export async function getComparison(id: string) {
 export async function updateAuditEmail(id: string, email: string): Promise<void> {
   await fetch(`${CONVEX_URL}/api/update-audit-email`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-API-Key": API_SECRET },
     body: JSON.stringify({ id, email }),
   });
 }
@@ -65,7 +66,7 @@ export async function updateAuditEmail(id: string, email: string): Promise<void>
 export async function updateComparisonEmail(id: string, email: string): Promise<void> {
   await fetch(`${CONVEX_URL}/api/update-comparison-email`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "X-API-Key": API_SECRET },
     body: JSON.stringify({ id, email }),
   });
 }
