@@ -192,4 +192,54 @@ http.route({
   })),
 });
 
+// Submit feedback
+http.route({
+  path: "/api/feedback",
+  method: "POST",
+  handler: httpAction(async (ctx, req) => {
+    const body = await req.json();
+    const id = await ctx.runMutation(api.feedback.submit, body);
+    return new Response(JSON.stringify({ id }), {
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+    });
+  }),
+});
+
+http.route({
+  path: "/api/feedback",
+  method: "OPTIONS",
+  handler: httpAction(async () => new Response(null, {
+    headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST", "Access-Control-Allow-Headers": "Content-Type" },
+  })),
+});
+
+// Get feedback for an audit
+http.route({
+  path: "/api/feedback/check",
+  method: "GET",
+  handler: httpAction(async (ctx, req) => {
+    const url = new URL(req.url);
+    const auditId = url.searchParams.get("auditId");
+    if (!auditId) return new Response("Missing auditId", { status: 400 });
+    const fb = await ctx.runQuery(api.feedback.getByAuditId, { auditId });
+    return new Response(JSON.stringify(fb || null), {
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+    });
+  }),
+});
+
+// Get approved testimonials
+http.route({
+  path: "/api/testimonials",
+  method: "GET",
+  handler: httpAction(async (ctx, req) => {
+    const url = new URL(req.url);
+    const limit = parseInt(url.searchParams.get("limit") || "10");
+    const testimonials = await ctx.runQuery(api.feedback.getApprovedTestimonials, { limit });
+    return new Response(JSON.stringify(testimonials), {
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" },
+    });
+  }),
+});
+
 export default http;

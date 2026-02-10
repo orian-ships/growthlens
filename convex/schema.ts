@@ -58,4 +58,18 @@ export default defineSchema({
   })
     .index("by_createdAt", ["createdAt"])
     .index("by_email", ["email"]),
+
+  feedback: defineTable({
+    auditId: v.string(),
+    profileUrl: v.string(),
+    rating: v.union(v.literal("positive"), v.literal("negative")),
+    comment: v.optional(v.string()),
+    testimonial: v.optional(v.string()), // only for positive
+    displayName: v.optional(v.string()), // name to show publicly
+    approved: v.boolean(), // admin approval for testimonial display
+    createdAt: v.number(),
+  })
+    .index("by_auditId", ["auditId"])
+    .index("by_approved", ["approved"])
+    .index("by_createdAt", ["createdAt"]),
 });
