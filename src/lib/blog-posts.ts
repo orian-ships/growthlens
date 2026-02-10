@@ -1072,6 +1072,241 @@ Not sure where your LinkedIn profile stands? Get a complete audit with actionabl
 *[GrowthLens](/) is the free LinkedIn audit tool for founders. Instant analysis, actionable scores, zero cost. Try it now.*
 `,
   },
+  {
+    slug: "linkedin-headline-examples-founders",
+    title: "LinkedIn Headline Examples for Founders: 30 Templates That Get Clicks",
+    excerpt: "Your LinkedIn headline is the most visible line on your profile. Here are 30 proven headline formulas for founders — organized by goal — with examples you can steal today.",
+    date: "2026-02-10",
+    metaDescription: "30 LinkedIn headline examples and templates for founders. Organized by goal: lead generation, thought leadership, hiring, and personal brand. Copy, customize, and grow.",
+    keywords: ["linkedin headline examples", "linkedin headline for founders", "best linkedin headlines", "linkedin headline formula", "linkedin headline tips"],
+    content: `
+# LinkedIn Headline Examples for Founders: 30 Templates That Get Clicks
+
+Your LinkedIn headline is the single most important line on your profile. It appears everywhere — search results, comments, connection requests, post attributions, and "People You May Know" suggestions. It's your 220-character billboard.
+
+Yet most founders waste it on a job title. "CEO at TechCorp." That tells people nothing about *what you do for them*.
+
+A great headline does three things:
+1. **Communicates value** — what outcome you deliver
+2. **Targets an audience** — who you help
+3. **Includes keywords** — so you appear in LinkedIn search
+
+Here are 30 headline templates organized by goal, with real examples you can customize today.
+
+## Lead Generation Headlines
+
+These headlines are built to attract potential customers and clients. They focus on the outcome you deliver.
+
+### 1. The Value Proposition Formula
+**Template:** \`[Role] | Helping [audience] [achieve outcome] through [method]\`
+
+**Examples:**
+- CEO at CloudSync | Helping SaaS founders reduce churn by 40% with predictive analytics
+- Founder at GreenShift | Helping DTC brands cut shipping costs 30% with smarter logistics
+- CEO at DataPulse | Helping B2B sales teams close 2x more deals with intent data
+
+This is the gold standard. It's clear, specific, and keyword-rich.
+
+### 2. The Problem Solver
+**Template:** \`[Audience] struggle with [problem]. I fix that. [Role] at [Company]\`
+
+**Examples:**
+- Startups struggle with hiring senior engineers. I fix that. CEO at TalentForge
+- Founders lose 20 hours/week on admin. I fix that. Building AutoOps
+- E-commerce brands can't scale past $1M. I fix that. CEO at ScaleKit
+
+Bold and direct. The "I fix that" pattern stops the scroll.
+
+### 3. The Metric Lead
+**Template:** \`[Impressive metric] | [Role] at [Company] | [What you do]\`
+
+**Examples:**
+- Helped 500+ startups raise $2B+ combined | Founder at LaunchCap | Early-stage advisory
+- $0 to $5M ARR in 18 months | CEO at RevStack | B2B revenue engine
+- 10,000+ LinkedIn profiles audited | Building GrowthLens | Free LinkedIn growth tool
+
+Numbers create instant credibility. Lead with your most impressive stat.
+
+### 4. The Before/After
+**Template:** \`I take [audience] from [before state] to [after state] | [Role]\`
+
+**Examples:**
+- I take founders from "posting into the void" to 10K+ engaged followers | LinkedIn strategist
+- I take early-stage startups from MVP to product-market fit | CEO at BuildRight
+- I take messy data into actionable dashboards | Founder at ClearMetrics
+
+Transformation language is compelling. People see themselves in the "before."
+
+### 5. The Social Proof Lead
+**Template:** \`[Social proof] | [Role] | [What you do]\`
+
+**Examples:**
+- Forbes 30 Under 30 | CEO at NexGen | Building the future of supply chain
+- Ex-Stripe, Ex-Google | Founder at PayFlow | Making B2B payments effortless
+- YC W24 | CEO at CodeShip | AI-powered code review for engineering teams
+
+If you have recognizable credentials, lead with them. Brand names do heavy lifting.
+
+## Thought Leadership Headlines
+
+These headlines position you as an authority in your space. Best for founders who use LinkedIn primarily to build influence.
+
+### 6. The Expert Niche
+**Template:** \`[Role] | Writing about [topic] for [audience] | [Company]\`
+
+**Examples:**
+- CEO at FinLedger | Writing about fintech regulation for startup founders
+- Founder at GrowthLab | Writing about B2B growth strategies that actually work
+- CTO at SecureBase | Writing about cybersecurity for non-technical founders
+
+This signals you're an active content creator, not just a profile sitter.
+
+### 7. The Mission Statement
+**Template:** \`On a mission to [change/build/transform] [what] | [Role] at [Company]\`
+
+**Examples:**
+- On a mission to make healthcare accessible to 1B people | CEO at MediBridge
+- On a mission to kill boring B2B software | Founder at Delight
+- On a mission to help every founder build in public | Building ShareJourney
+
+Mission-driven headlines resonate emotionally. They signal purpose beyond profit.
+
+### 8. The Contrarian
+**Template:** \`[Contrarian belief] | [Role] at [Company]\`
+
+**Examples:**
+- I believe most marketing advice is wrong. Proving it at DataDriven
+- Cold outreach is dead. Building the replacement at WarmLead
+- Your LinkedIn profile matters more than your resume. Founder at GrowthLens
+
+Contrarian takes create curiosity. People click to understand *why* you believe this.
+
+### 9. The Builder Narrative
+**Template:** \`Building [what] | [Stage/traction] | Previously [credibility]\`
+
+**Examples:**
+- Building the Stripe for creator payments | $2M ARR | Previously product at Square
+- Building AI that writes legal contracts in minutes | 500+ law firms onboard | Ex-Latham
+- Building the hiring platform founders actually want to use | YC S24 | Ex-Notion
+
+The "building" keyword signals you're actively creating, not just managing.
+
+### 10. The Dual Identity
+**Template:** \`[Day job] by day | [Passion/side project] by night | [Connecting theme]\`
+
+**Examples:**
+- CEO at LogiTrack by day | Angel investor by night | Obsessed with logistics tech
+- VP Engineering at Acme by day | Open source contributor by night | Building dev tools
+- Startup founder by day | Podcast host by night | Conversations about founder mental health
+
+Shows dimension. You're not one-dimensional, and that's interesting.
+
+## Hiring & Recruiting Headlines
+
+For founders who are actively building their teams.
+
+### 11. The Talent Magnet
+**Template:** \`Building [exciting thing] at [Company] | Hiring [roles] | [What makes it special]\`
+
+**Examples:**
+- Building AI that reads X-rays better than radiologists | Hiring ML engineers | Series A, remote-first
+- Building the next-gen CRM at FlowCRM | Hiring founding engineers | $5M seed, SF/remote
+- Reinventing how teams collaborate at SyncUp | Hiring designers + PMs | Backed by a16z
+
+Founders who signal they're hiring attract talent *and* customers simultaneously.
+
+### 12. The Culture Signal
+**Template:** \`[Role] at [Company] | We're [culture descriptor] | Join us: [link/note]\`
+
+**Examples:**
+- CEO at DevFirst | We're 40 engineers who ship daily and never do standups | Hiring
+- Founder at GreenOps | We're a climate tech team that actually has fun | Always hiring curious minds
+- CEO at BuildFast | We're remote, async, and obsessed with craft | Founding team forming
+
+Culture-forward headlines attract values-aligned candidates.
+
+## Personal Brand Headlines
+
+For founders building a recognizable personal brand alongside their company.
+
+### 13. The Multi-Hyphenate
+**Template:** \`[Role 1] | [Role 2] | [Role 3] | [Unifying theme]\`
+
+**Examples:**
+- Founder | Investor | Writer | Helping technical founders become better leaders
+- CEO | Podcast Host | Angel Investor | All things B2B SaaS
+- Founder | Speaker | Advisor | Making startups less lonely
+
+Keep it to 3-4 roles max. More than that looks unfocused.
+
+### 14. The Content Creator
+**Template:** \`[Content output] about [topic] | [Role] at [Company]\`
+
+**Examples:**
+- Daily posts about startup finance | CFO-turned-Founder at FinStack
+- Weekly deep dives on product strategy | Head of Product at ShipFast
+- Sharing raw founder lessons from building a $10M company | CEO at ScaleWorks
+
+This headline works best if you actually post consistently.
+
+### 15. The Results Resume
+**Template:** \`[Result 1] → [Result 2] → [Result 3] → Now: [Current thing]\`
+
+**Examples:**
+- Dropped out of college → Built a $20M agency → Sold it → Now building AI tools at AutoCraft
+- Failed 3 startups → Finally hit PMF → $8M ARR → Now helping founders avoid my mistakes
+- 0 to 50K LinkedIn followers in 12 months → Now teaching founders to do the same
+
+Journey-style headlines are compelling because they show trajectory.
+
+## How to Choose Your Headline
+
+Ask yourself these questions:
+
+1. **What's my primary goal on LinkedIn?** If it's leads → use lead gen headlines. If it's influence → use thought leadership headlines. If it's hiring → use hiring headlines.
+
+2. **What's my strongest asset?** If you have impressive metrics → lead with numbers. If you have brand-name experience → lead with social proof. If you have a compelling mission → lead with purpose.
+
+3. **What keywords does my audience search for?** Include 2-3 keywords your target audience would use when searching LinkedIn. "B2B SaaS," "AI," "growth marketing," "fintech" — whatever your domain is.
+
+4. **Is it specific enough?** "Entrepreneur | Innovator" tells nobody anything. "Helping B2B SaaS founders reduce churn with predictive analytics" is specific and searchable.
+
+## Common Headline Mistakes
+
+**❌ Just your job title.** "CEO" or "Founder" wastes 200+ characters of prime real estate.
+
+**❌ Buzzword soup.** "Passionate | Innovative | Thought Leader | Visionary | Disruptor" — these words mean nothing.
+
+**❌ Trying to be clever over clear.** "Professional Human Being 🤪" might be funny, but it doesn't convert.
+
+**❌ Too many emojis.** One emoji can add personality. Five emojis look unprofessional.
+
+**❌ Outdated information.** If you left a company 2 years ago, update your headline.
+
+## Test Your Headline With GrowthLens
+
+Not sure if your headline is working? **GrowthLens** evaluates your LinkedIn headline as part of a complete profile audit — checking keyword optimization, clarity, length, and impact. You get a specific headline score plus recommendations to improve it.
+
+**[Run your free LinkedIn audit →](/)** — See how your headline scores and get specific rewrite suggestions. Takes 60 seconds, no login required.
+
+## The 60-Second Headline Rewrite
+
+If you're going to do one thing after reading this article, do this:
+
+1. Open your LinkedIn profile
+2. Look at your current headline
+3. Pick the template above that best matches your goal
+4. Rewrite your headline using that template
+5. Make sure it includes at least 2 keywords your audience searches for
+6. Save it
+
+Then come back in a week and check your profile views. A good headline can increase profile views by 30-50% within days.
+
+---
+
+*Want a data-driven assessment of your LinkedIn headline and entire profile? [Try GrowthLens free](/) — instant audit, specific recommendations, zero cost.*
+`,
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
