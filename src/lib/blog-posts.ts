@@ -1458,6 +1458,140 @@ That's a 2x gap. And it compounds — better profiles get more views, more views
 *Want to know exactly where your LinkedIn profile stands? [Run a free GrowthLens audit](/) — instant scoring across all 8 dimensions, with specific recommendations to improve.*
 `,
   },
+  {
+    slug: "growthlens-vs-taplio",
+    title: "GrowthLens vs Taplio: Which LinkedIn Tool Is Right for You in 2026?",
+    excerpt: "An honest comparison of GrowthLens and Taplio — two very different approaches to LinkedIn growth. One audits your profile and content strategy, the other helps you write and schedule posts.",
+    date: "2026-02-11",
+    metaDescription: "GrowthLens vs Taplio comparison. Understand the key differences between these LinkedIn tools — profile auditing vs content scheduling — and which one fits your growth strategy.",
+    keywords: ["growthlens vs taplio", "taplio alternative", "linkedin audit tool", "linkedin growth tool", "taplio review", "linkedin profile analysis tool"],
+    content: `
+# GrowthLens vs Taplio: Which LinkedIn Tool Is Right for You in 2026?
+
+If you're serious about LinkedIn growth, you've probably come across both GrowthLens and Taplio. They're both "LinkedIn tools" — but they solve fundamentally different problems.
+
+This isn't a hit piece. Taplio is a solid product. But choosing the right tool depends on **what's actually holding you back** on LinkedIn.
+
+## The Core Difference
+
+**GrowthLens** is a **profile and content audit tool**. It analyzes your LinkedIn presence — profile completeness, content strategy, engagement patterns, posting consistency — and gives you a scored breakdown with specific recommendations.
+
+**Taplio** is a **content creation and scheduling tool**. It helps you write posts (with AI assistance), schedule them, find viral content for inspiration, and manage your LinkedIn publishing workflow.
+
+Think of it this way:
+- **GrowthLens** tells you *what's wrong* and *what to fix*
+- **Taplio** helps you *create and publish* content
+
+They're complementary, not competing. But if you can only pick one, here's how to decide.
+
+## Feature Comparison
+
+### Profile Analysis
+
+| | GrowthLens | Taplio |
+|---|---|---|
+| Overall profile score | ✅ Detailed 0-100 scoring | ❌ No profile scoring |
+| Section-by-section breakdown | ✅ 8 scoring dimensions | ❌ Not available |
+| Headline analysis | ✅ Keyword + clarity scoring | ❌ Not available |
+| Banner/photo evaluation | ✅ Automated checks | ❌ Not available |
+| Actionable recommendations | ✅ Prioritized action playbook | ❌ Not available |
+
+**Winner: GrowthLens.** Taplio doesn't do profile auditing at all. If your profile is weak, no amount of content scheduling will fix it.
+
+### Content Strategy Analysis
+
+| | GrowthLens | Taplio |
+|---|---|---|
+| Post performance analysis | ✅ Full post library with sorting | ⚠️ Basic analytics |
+| Content pillar classification | ✅ 10-category taxonomy | ❌ Not available |
+| Engagement rate benchmarking | ✅ Per-post + overall | ⚠️ Limited |
+| Posting schedule heatmap | ✅ Day/time visualization | ✅ Schedule view |
+| Hashtag analysis | ✅ Usage + effectiveness | ❌ Not available |
+
+**Winner: GrowthLens** for analysis. Taplio focuses on creation, not retrospective analysis.
+
+### Content Creation
+
+| | GrowthLens | Taplio |
+|---|---|---|
+| AI post writer | ❌ Not available | ✅ GPT-powered |
+| Post templates | ❌ Not available | ✅ Large library |
+| Viral post inspiration | ❌ Not available | ✅ Content discovery |
+| Carousel creator | ❌ Not available | ✅ Built-in |
+| Post scheduling | ❌ Not available | ✅ Full scheduler |
+
+**Winner: Taplio.** This is Taplio's core product. GrowthLens intentionally doesn't do content creation — it focuses on strategy and analysis.
+
+### Comparison & Benchmarking
+
+| | GrowthLens | Taplio |
+|---|---|---|
+| Compare two profiles | ✅ Side-by-side with gap analysis | ❌ Not available |
+| Competitor tracking | ✅ (coming soon) | ⚠️ Basic |
+| Shareable audit reports | ✅ Public URLs | ❌ Not available |
+
+**Winner: GrowthLens.** The comparison feature is uniquely powerful for understanding where you stand relative to competitors or role models.
+
+## Pricing
+
+**GrowthLens:** Free. Unlimited audits, unlimited comparisons. No account required.
+
+**Taplio:** Starts at $49/month (billed annually) for the Starter plan. Pro is $79/month.
+
+For someone just trying to understand their LinkedIn presence, GrowthLens is the obvious first step — it costs nothing and immediately tells you what to work on.
+
+## When to Use GrowthLens
+
+- You don't know what's wrong with your LinkedIn strategy
+- Your profile hasn't been updated in months
+- You're getting low engagement and don't know why
+- You want to benchmark yourself against competitors
+- You need data to guide your content strategy (not just "post more")
+- You want to share an audit with a client, colleague, or team
+
+## When to Use Taplio
+
+- You already know your strategy but need help executing
+- You want AI assistance writing LinkedIn posts
+- You need to schedule posts ahead of time
+- You want a library of viral post templates for inspiration
+- You're managing multiple LinkedIn accounts
+
+## The Best Approach: Use Both
+
+Here's the workflow that actually works:
+
+1. **Start with GrowthLens** — Run a free audit. Understand your strengths, weaknesses, and content gaps.
+2. **Fix your profile first** — Use GrowthLens recommendations to optimize your headline, about section, and featured content.
+3. **Build your strategy** — Use GrowthLens content pillar analysis to identify what's working and what's missing.
+4. **Then use Taplio to execute** — Now that you know *what* to post, use Taplio's AI writer and scheduler to produce it consistently.
+5. **Re-audit monthly** — Come back to GrowthLens to track progress and adjust strategy.
+
+Skipping straight to content scheduling without understanding your baseline is like hiring a personal trainer without knowing your current fitness level. The audit comes first.
+
+## Who Should Skip Taplio?
+
+If you're a founder posting 2-3 times per week and you're comfortable writing your own content, you probably don't need Taplio. LinkedIn's native scheduler works fine for basic scheduling, and authentic founder voice consistently outperforms AI-generated content.
+
+What you *do* need is a clear picture of what's working. That's where GrowthLens fills the gap.
+
+## The Bottom Line
+
+| Need | Best Tool |
+|---|---|
+| "What's wrong with my LinkedIn?" | **GrowthLens** |
+| "Help me write and schedule posts" | **Taplio** |
+| "How do I compare to competitors?" | **GrowthLens** |
+| "I need AI to help me create content" | **Taplio** |
+| "I want a free analysis right now" | **GrowthLens** |
+
+Both tools have their place. But if you haven't audited your LinkedIn profile yet, that's step one — and it's free.
+
+---
+
+*Ready to find out where your LinkedIn actually stands? [Run a free GrowthLens audit](/) — takes 30 seconds, no signup required.*
+`,
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
