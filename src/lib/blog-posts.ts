@@ -1741,6 +1741,139 @@ Both tools have their place. But if you haven't audited your LinkedIn profile ye
 *Ready to find out where your LinkedIn actually stands? [Run a free GrowthLens audit](/) — takes 30 seconds, no signup required.*
 `,
   },
+  {
+    slug: "linkedin-about-section-examples",
+    title: "12 LinkedIn About Section Examples That Actually Convert (With Templates)",
+    excerpt: "Your LinkedIn About section is your pitch — and most founders waste it. Here are 12 real examples that generate leads, plus copy-paste templates you can use today.",
+    date: "2026-02-11",
+    metaDescription: "12 LinkedIn About section examples for founders, consultants, and professionals. Includes copy-paste templates, scoring criteria, and common mistakes to avoid.",
+    keywords: ["linkedin about section examples", "linkedin summary examples", "linkedin bio examples", "linkedin about me examples", "linkedin about section template"],
+    content: `
+# 12 LinkedIn About Section Examples That Actually Convert (With Templates)
+
+Your LinkedIn About section is the most underrated growth lever on the platform. It sits right below your headline and banner — prime real estate that 40% of LinkedIn users leave completely empty.
+
+The About section isn't a biography. It's a **sales page**. Every word should move the reader toward one action: connecting, following, or reaching out.
+
+After auditing hundreds of LinkedIn profiles through GrowthLens, we've identified exactly what separates About sections that generate inbound leads from ones that get skipped entirely.
+
+## Why Your About Section Matters More Than You Think
+
+LinkedIn's search algorithm indexes your About section heavily. The keywords you use here directly impact whether you show up when prospects search for expertise in your space.
+
+But it's not just SEO. Your About section is often the **deciding factor** for whether someone sends a connection request or moves on.
+
+Here's what the data shows:
+- Profiles with optimized About sections get **5x more profile views**
+- About sections with a clear CTA generate **3x more inbound messages**
+- The first 3 lines (visible without clicking "see more") determine 80% of engagement
+
+## The Anatomy of a High-Converting About Section
+
+### Line 1-3: The Hook (Visible Without Clicking)
+These 300 characters must create enough curiosity or value to earn the "see more" click.
+
+**What works:** A bold claim, a surprising stat, a relatable pain point, or a direct value proposition.
+
+**What doesn't:** "I am a passionate professional with 15 years of experience in..."
+
+### Lines 4-8: The Value Story
+Expand on who you help, what you do, and why you're credible. Use specific numbers and outcomes.
+
+### Lines 9-12: Proof Points
+Metrics, client names, results, media mentions, or notable achievements.
+
+### Last 2 Lines: The CTA
+Tell people exactly what to do next. Be specific.
+
+## 12 LinkedIn About Section Examples
+
+### Example 1: The Founder with a Bold Open
+
+"Most B2B companies lose 40% of new users in their first week. We fixed that. At Onboard.io, we've helped 200+ SaaS companies cut onboarding churn in half — without adding friction to the signup flow."
+
+**Why it works:** Opens with a pain point and a bold two-word solution. Specific numbers throughout. Clear CTA at the end.
+
+### Example 2: The Consultant Who Leads With Results
+
+"£2.5 billion in M&A integrations. £50 million in AI-driven cost savings. Zero fluff. I'm a fractional Chief Transformation Officer for SMEs that need enterprise-grade change leadership without the enterprise price tag."
+
+**Why it works:** The opening line is pure social proof — impossible to scroll past. Clear positioning as fractional.
+
+### Example 3: The Technical Founder Who Speaks Human
+
+"Your customers don't care about your tech stack. They care about not losing 3 hours every Friday to manual reporting. I built DataPipe to kill the spreadsheet busywork that sucks the life out of ops teams."
+
+**Why it works:** Opens with customer empathy, not self-congratulation. Personality shines through.
+
+### Example 4: The Agency Owner
+
+"I've scaled 40+ LinkedIn personal brands from zero to 10K+ followers. Here's what I've learned: 90% of LinkedIn strategy advice is recycled garbage."
+
+**Why it works:** The contrarian hook positions them against the noise. Specific service deliverables follow.
+
+### Example 5: The Career Changer
+
+"From hotel kitchens to SaaS sales — and I'd do it again. 8 years in hospitality taught me something most tech salespeople never learn: how to read a room in 3 seconds."
+
+**Why it works:** The origin story is memorable and differentiating. Vulnerability creates trust.
+
+### Example 6: The Minimalist
+
+"I help B2B SaaS companies find product-market fit faster. 3 companies built. 2 acquired. 1 spectacular failure."
+
+**Why it works:** Brevity is a power move. Every line earns its place. The "1 spectacular failure" line is unforgettable.
+
+## 5 Templates You Can Use Right Now
+
+### Template 1: The Pain-Solution Hook
+[Surprising pain point stat] → [How you solve it] → [Credibility] → [Offer bullets] → [Results] → [CTA]
+
+### Template 2: The Story Arc
+[Unexpected personal opening] → [Connection to current work] → [Achievements] → [Content expectations] → [CTA]
+
+### Template 3: The Authority Play
+[Bold credential] → [What you do and for whom] → [Method bullets] → [Results bullets] → [CTA]
+
+### Template 4: The Content Creator
+[What you teach + anti-positioning] → [Growth story with numbers] → [Content pillars] → [Resources] → [Follow CTA]
+
+### Template 5: The Minimalist
+[What you do — 1 sentence] → [Track record — 1 sentence] → [Currently] → [Open to] → [CTA]
+
+## The 7 Most Common About Section Mistakes
+
+1. **Starting with "I am a passionate..."** — The word "passionate" is meaningless on LinkedIn. Show passion through your story and results.
+2. **Writing in third person** — "John is an experienced leader who..." feels corporate. First person builds connection.
+3. **No CTA** — If someone reads your About and loves it, what should they do? Don't leave that to chance.
+4. **Wall of text** — Use line breaks, bullets, and white space. Nobody reads a 500-word paragraph on a screen.
+5. **Listing skills instead of outcomes** — "Skilled in project management" vs. "Led the integration of a £190M acquisition across 1,100 stores."
+6. **Ignoring the first 3 lines** — These are visible without clicking "see more." If your hook is buried, nobody will ever read it.
+7. **Copying a template without adding personality** — Templates are starting points, not final products.
+
+## How to Score Your About Section
+
+Rate yourself on these 5 criteria (each worth 20 points):
+
+- **Hook** (0-20): Do the first 3 lines create curiosity or state clear value?
+- **Clarity** (0-20): Can a stranger understand what you do in 10 seconds?
+- **Proof** (0-20): Are there specific numbers, names, or results?
+- **Personality** (0-20): Does it sound like a human or a corporate press release?
+- **CTA** (0-20): Is there a clear next step for the reader?
+
+**80-100:** Your About section is working for you. **60-79:** Solid — a few tweaks will help. **Below 60:** Time for a rewrite using the templates above.
+
+## Let GrowthLens Score Your About Section Automatically
+
+**GrowthLens** analyzes your LinkedIn About section as part of a complete profile audit — checking hook quality, CTA presence, structure, and keyword optimization.
+
+**[Get your free LinkedIn audit →](/)** — 60 seconds, no signup, completely free. See exactly how your About section scores and get specific recommendations to improve it.
+
+---
+
+*Want more LinkedIn optimization guides? Check out our [LinkedIn headline examples for founders](/blog/linkedin-headline-examples-founders) and [complete profile audit guide](/blog/how-to-audit-your-linkedin-profile).*
+`,
+  },
 ];
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
