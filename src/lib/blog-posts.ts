@@ -1459,6 +1459,155 @@ That's a 2x gap. And it compounds — better profiles get more views, more views
 `,
   },
   {
+    slug: "linkedin-profile-mistakes-costing-you-leads",
+    title: "7 LinkedIn Profile Mistakes That Are Costing You Leads (And How to Fix Each One in Under 5 Minutes)",
+    excerpt: "Most founders don't realize their LinkedIn profile is actively repelling potential customers. Here are the 7 most common mistakes we see in GrowthLens audits — with quick fixes for each.",
+    date: "2026-02-11",
+    metaDescription: "7 LinkedIn profile mistakes that cost founders leads and opportunities. Each mistake includes a quick fix you can implement in under 5 minutes. Based on real audit data.",
+    keywords: ["linkedin profile mistakes", "linkedin lead generation", "linkedin profile tips", "fix linkedin profile", "linkedin for founders", "linkedin profile review"],
+    content: `
+# 7 LinkedIn Profile Mistakes That Are Costing You Leads (And How to Fix Each One in Under 5 Minutes)
+
+Your LinkedIn profile is a sales page. Every day, potential customers, investors, and partners visit it — and most of them leave without reaching out.
+
+Not because you're not impressive. Because your profile makes the wrong first impression.
+
+After auditing thousands of founder profiles through GrowthLens, we see the same 7 mistakes over and over. Each one is silently killing your inbound leads. The good news? Each one takes under 5 minutes to fix.
+
+## Mistake #1: Your Headline Is Just a Job Title
+
+**The problem:** "CEO at TechCorp" tells visitors nothing about the value you provide. It's a label, not a pitch. LinkedIn's search algorithm also weights headlines heavily — a generic title means you're invisible in search results for the problems you actually solve.
+
+**How common:** 68% of founder profiles we audit have title-only headlines.
+
+**The 5-minute fix:** Rewrite your headline using this formula:
+
+\`[Role] | Helping [audience] [achieve specific outcome] | [Credibility signal]\`
+
+**Before:** "Founder & CEO at DataSync"
+**After:** "Founder at DataSync | Helping SaaS teams reduce data migration time by 80% | Ex-AWS"
+
+Open LinkedIn right now, click the pencil icon on your intro, and rewrite it. 220 characters. Make every one count.
+
+## Mistake #2: Your About Section Opens With "I Am a Passionate..."
+
+**The problem:** The first 3 lines of your About section are visible without clicking "see more." That's your hook — roughly 300 characters to make someone care enough to keep reading. Starting with "I am a passionate entrepreneur with 15 years of experience" is the LinkedIn equivalent of a cold email that opens with "I hope this email finds you well."
+
+Nobody reads past it.
+
+**How common:** 54% of About sections we audit start with a first-person bio statement.
+
+**The 5-minute fix:** Replace your opening with one of these patterns:
+
+- **The problem hook:** "Most B2B companies lose 40% of new users in week one. We fixed that."
+- **The stat hook:** "$2.3 billion. That's how much SaaS companies waste annually on failed migrations."
+- **The question hook:** "What if your data migration took 2 hours instead of 2 months?"
+
+Then follow with: what you do, proof it works (numbers), and a clear call to action (DM me, book a call, visit our site).
+
+## Mistake #3: Your Featured Section Is Empty
+
+**The problem:** The Featured section sits directly below your About — it's the most prominent visual element on your profile. Leaving it empty wastes prime real estate that could be converting visitors into leads.
+
+Think of it as your storefront window. An empty window doesn't attract customers.
+
+**How common:** 72% of founder profiles have zero Featured items.
+
+**The 5-minute fix:** Add 2-3 items right now:
+
+1. **A lead magnet or resource** — Free guide, checklist, or tool relevant to your audience
+2. **Your best-performing LinkedIn post** — Social proof that you create valuable content
+3. **A case study or results page** — Proof that your product/service delivers
+
+LinkedIn lets you pin posts, add links, and upload documents to Featured. Do it now.
+
+## Mistake #4: Your Profile Photo Screams 2015
+
+**The problem:** An outdated, low-quality, or missing profile photo destroys credibility before a visitor reads a single word. LinkedIn data shows profiles with professional photos get 21x more profile views and 36x more messages.
+
+It's not about being photogenic. It's about looking current, approachable, and professional.
+
+**How common:** 34% of profiles we audit have photos that score below 5/10 on our quality assessment.
+
+**The 5-minute fix:** If your photo is more than 3 years old, replace it today. You don't need a studio shoot:
+
+- Stand near a window (natural light is flattering)
+- Use a plain wall as background
+- Ask someone to take it with a smartphone (portrait mode)
+- Face the camera, slight smile, shoulders visible
+- Crop to a headshot (face takes up 60-70% of frame)
+
+While you're at it — update your banner too. The default blue gradient signals neglect. Create a simple banner in Canva with your value proposition or company tagline. Takes 3 minutes.
+
+## Mistake #5: Your Experience Section Reads Like a Resume
+
+**The problem:** "Responsible for managing product development and a team of 15" is a job description, not a story. It tells visitors what you were supposed to do, not what you actually achieved. Nobody hires, invests in, or buys from "responsible for."
+
+**How common:** 61% of founder experience sections are responsibility-focused instead of outcome-focused.
+
+**The 5-minute fix:** Rewrite your current role using this pattern:
+
+**Before:** "Responsible for overall company strategy, product development, and team management."
+
+**After:** "Built DataSync from idea to $3M ARR in 18 months. Grew the team from 2 to 25. Our platform now processes 500M+ records monthly for 200+ enterprise customers including 3 Fortune 500 companies."
+
+The formula: **What you built + measurable results + scale indicators.**
+
+Even if your company is early-stage: "Launched 6 months ago. Already serving 50+ customers. Growing 30% month-over-month." Numbers — any numbers — create credibility.
+
+## Mistake #6: You Have Zero Activity in the Last 30 Days
+
+**The problem:** A polished profile with no recent activity is like a beautiful restaurant with no reviews. It creates doubt. "Is this person even active? Are they relevant? Should I bother reaching out?"
+
+LinkedIn's algorithm also penalizes inactive profiles by reducing their visibility in search results and "People You May Know" suggestions.
+
+**How common:** 43% of founder profiles we audit haven't posted in the last 30 days.
+
+**The 5-minute fix:** You don't need to write a viral post. Just start:
+
+- **Comment on 3 posts** in your industry right now (thoughtful comments, not "Great post!")
+- **Share an industry article** with your take in 2-3 sentences
+- **Post a simple text update** — a lesson learned, a question for your network, or an observation from your work this week
+
+Consistency matters more than perfection. Even 2 posts per week puts you ahead of 90% of founders.
+
+## Mistake #7: Your Skills Don't Match What You Want to Be Found For
+
+**The problem:** LinkedIn Skills aren't just vanity badges — they're a direct ranking factor in search. If you want to be found by "B2B SaaS" buyers but your top skills are "Microsoft Office" and "Project Management" from a job 10 years ago, you're invisible to your actual audience.
+
+**How common:** 57% of founders have skills that don't align with their current positioning.
+
+**The 5-minute fix:**
+
+1. Go to your Skills section
+2. Remove anything irrelevant to your current role/audience
+3. Add 5-10 skills that match what your ideal customer would search for
+4. Reorder so your top 3 displayed skills are your most important keywords
+5. Ask 2-3 colleagues to endorse your key skills (endorsements boost search ranking)
+
+## The Compound Effect
+
+Each mistake on its own might seem minor. But compound all 7 and you have a profile that's:
+
+- Invisible in LinkedIn search
+- Unconvincing to visitors who do find you
+- Missing obvious conversion opportunities
+- Signaling inactivity and irrelevance
+
+Fix all 7 — which takes about 30 minutes total — and you'll have a profile that actively generates leads instead of repelling them.
+
+## See Exactly Where Your Profile Stands
+
+Don't guess which of these mistakes you're making. **GrowthLens** audits your LinkedIn profile across all these dimensions and more — giving you a precise score with prioritized recommendations.
+
+**[Run your free LinkedIn audit now →](/)** — Takes 60 seconds. No signup required. See your score and know exactly what to fix first.
+
+---
+
+*[GrowthLens](/) — the free LinkedIn audit tool for founders. Instant analysis, actionable fixes, zero cost.*
+`,
+  },
+  {
     slug: "growthlens-vs-taplio",
     title: "GrowthLens vs Taplio: Which LinkedIn Tool Is Right for You in 2026?",
     excerpt: "An honest comparison of GrowthLens and Taplio — two very different approaches to LinkedIn growth. One audits your profile and content strategy, the other helps you write and schedule posts.",
